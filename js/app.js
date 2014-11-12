@@ -2,8 +2,9 @@ $(document).ready(function() {
 
     $(".extra-information").hide();
 
-    var community_api_key = "9f8c437533633048b3d4f6ae3539da2c:2:61350197"
-    var article_api_key = "2d371cd00638970c9a34112fe038120e:19:61350197"
+    var community_api_key = "9f8c437533633048b3d4f6ae3539da2c:2:61350197";
+    var article_api_key = "2d371cd00638970c9a34112fe038120e:19:61350197";
+    // var 
 
     function search_filter(search_type, query, callback) {
 
@@ -61,8 +62,6 @@ $(document).ready(function() {
             var display_name = results[i].display_name;
             var commentBody = results[i].commentBody;
             var user_id = results[i].userComments.substr(50).replace(".xml", "");
-            var whee = user_search(user_id);
-            console.log(whee);
 
             var mod_content = commentBody.replace("<br>", " ").replace("</br>", " ").replace("<br />", " ").replace("<br/>", " ");
             var content = display_name + ": " + mod_content.substring(0, 20) + "...";
@@ -72,14 +71,15 @@ $(document).ready(function() {
             var element = $("<li/>").attr("class", "comments").html(comment_content);
             element.appendTo(".sidebar-nav");
 
-            var page_content = $("<div/>").attr("class", "jumbotron");
-            var mod_page_content = $('<div class="container inline"></div>').appendTo(page_content);
+           	var page_content = $("<div/>").attr("class", "jumbotron").appendTo(".expanded-comments");
+            $('<div id="'+user_id+'"></div>').appendTo(page_content);
+            var mod_page_content = $('<div class="container inline"></div>').appendTo($("#"+user_id));
             $('<h3>' + display_name + '<p style="color: grey; font-size: 15px;">' +
                 location + ' @ ' + date + '</p></h3>').appendTo(mod_page_content);
-            page_content.appendTo(".expanded-comments");
-
-
-            $('<div class= "panel box" id"' + user_id + '"><div class="box-comment">' + mod_content + '</div></div>').appendTo(page_content);
+            $('<div class= "panel box"><div class="box-comment">' + mod_content + '</div></div>').appendTo($("#"+user_id));
+            
+            user_search(user_id, commentBody);
+            // console.log(user_search(user_id));
 
             var URL = (results[i].articleURL).replace(":", "%3A").replace("/", "%2F");
         }
@@ -92,7 +92,8 @@ $(document).ready(function() {
                 'type': 'GET',
                 'dataType': "json",
                 success: function(data, textStats, XMLHttpRequest) {
-                	console.log(data.results);
+
+                	// for i in 
                     return data.results;
                 },
                 error: function(data, textStatus, errorThrown) {
@@ -101,7 +102,7 @@ $(document).ready(function() {
             });
     }
 
-    function user_search(user_id) {
+    function user_search(user_id, first_comment) {
 
         var search_url = "user/id/" + user_id + ".jsonp?api-key=";
         var api_key = community_api_key;
@@ -112,15 +113,30 @@ $(document).ready(function() {
                 'type': 'GET',
                 'dataType': "jsonp",
                 success: function(data, textStats, XMLHttpRequest) {
-                    console.log(data.results.comments);
-                    $('<div class= "panel box"><div class="box-comment">' + mod_content + '</div></div>').appendTo(page_content);
-                    return data.results;
+                	// var user_comment = [];
+                	var results = data.results.comments;
+                	console.log(data.results.comments);
+
+                	for (var i = 0; i < results.length; i++) {
+                		var comment = results[i].commentBody;
+                		// user_comment.push(results[i].commentBody);
+                		if (comment != first_comment) {
+                			$('<div class= "panel box"><div class="box-comment">' + results[i].commentBody + '</div></div>').appendTo($("#"+user_id));
+                		}
+                	}
+                	
                 },
                 error: function(data, textStatus, errorThrown) {
                     console.log("error");
                 }
             });
     }
+
+    // function user_comments(user_comment) {
+    // 	for (var i=0, i<user_comment.length; i++) {
+    // 		$('<div class= "panel box"><div class="box-comment">' + user_comment[i] + '</div></div>').appendTo($("#"+user_id));
+    // 	}
+    // }
 
     function comment_page_content(results) {
         // alert(results);
