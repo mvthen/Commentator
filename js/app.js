@@ -4,7 +4,14 @@ $(document).ready(function() {
 
     var community_api_key = "9f8c437533633048b3d4f6ae3539da2c:2:61350197";
     var article_api_key = "2d371cd00638970c9a34112fe038120e:19:61350197";
-    // var 
+
+
+    // function scrollToAnchor(href) {
+    //     var aTag = $("a[name='" + href + "']");
+    //     $('html,body').animate({
+    //         scrollTop: aTag.offset().top-100
+    //     }, 'slow');
+    // }
 
     function search_filter(search_type, query, callback) {
 
@@ -17,7 +24,6 @@ $(document).ready(function() {
             search_url = "random.jsonp?api-key=";
             api_key = community_api_key;
         }
-        // if (search_type == "user") {search_url = "user/id/" + query+".jsonp?api-key="; api_key=community_api_key;}
         if (search_type == "date") {
             search_url = "by-date/" + query + ".jsonp?api-key=";
             api_key = community_api_key;
@@ -45,11 +51,11 @@ $(document).ready(function() {
     }
 
     function display_first(data) {
-        $('<li><div class="comment-inside" style="color:#B74934"><h4>COMMENTS</h4></div></li>').appendTo(".sidebar-nav");
+        // $('<li><div class="comment-inside" style="color:#B74934"><h4>COMMENTS</h4></div></li>').appendTo(".sidebar-nav");
 
         // console.log(data);
         results = data.results.comments
-        // console.log(results);
+            console.log(results);
         for (var i = 0; i < results.length; i++) {
 
             var utcSeconds = results[i].approveDate;
@@ -62,24 +68,32 @@ $(document).ready(function() {
             var display_name = results[i].display_name;
             var commentBody = results[i].commentBody;
             var user_id = results[i].userComments.substr(50).replace(".xml", "");
+            var articleURL = results[i].articleURL;
 
             var mod_content = commentBody.replace("<br>", " ").replace("</br>", " ").replace("<br />", " ").replace("<br/>", " ");
-            var content = display_name + ": " + mod_content.substring(0, 20) + "...";
+            // var content = display_name + ": " + mod_content.substring(0, 20) + "...";
+            var content = display_name;
 
             var comment_inside = $("<div/>").attr("class", "comment-inside").text(content);
-            var comment_content = $("<a/>").attr("id", "btn_" + i).html(comment_inside);
+            var comment_content = $("<a/>").attr("href", "#btn_" + user_id).html(comment_inside);
             var element = $("<li/>").attr("class", "comments").html(comment_content);
             element.appendTo(".sidebar-nav");
 
-           	var page_content = $("<div/>").attr("class", "jumbotron").appendTo(".expanded-comments");
-            $('<div id="'+user_id+'"></div>').appendTo(page_content);
-            var mod_page_content = $('<div class="container inline"></div>').appendTo($("#"+user_id));
-            $('<h3>' + display_name + '<p style="color: grey; font-size: 15px;">' +
-                location + ' @ ' + date + '</p></h3>').appendTo(mod_page_content);
-            $('<div class= "panel box"><div class="box-comment">' + mod_content + '</div></div>').appendTo($("#"+user_id));
-            
+            // var a_link = $('<a name="' + user_id + '"></a>').appendTo(".expanded-comments");
+            $('<a class="anchors" name="btn_' + user_id + '"></a>').appendTo(".expanded-comments");
+            var page_content = $("<div/>").attr("class", "jumbotron").appendTo(".expanded-comments");
+            // var page_content = $("<div/>").attr("class", "jumbotron").appendTo(a_link);
+            $('<div id="' + user_id + '"></div>').appendTo(page_content);
+            var mod_page_content = $('<div class="container inline"></div>').appendTo($("#" + user_id));
+            $('<h3>' + display_name + ' </h3>').appendTo(mod_page_content);
+            $('<div class= "panel box"><div class="box-comment"><a href="'+articleURL+
+            	'" target="_blank">Associated Article</a><p style="color: grey; font-size: 13px;">' +
+                location + ' @ ' + date + '</p>' + mod_content + '</div></div>').appendTo($("#" + user_id));
+            var naw = $('<div id = "more-comments-' + user_id + '" style="display:none;"></div>').appendTo($("#" + user_id));
+            // $('<div class= "less-button-out"><a href="#'+user_id+'" onclick="toggle_less(\'more-comments-' + user_id +
+            //                 '\');"><img src="img/up_arrow_green.png" id="less-button-'+user_id+'"></a></div>').appendTo($('#' + user_id));
+
             user_search(user_id, commentBody);
-            // console.log(user_search(user_id));
 
             var URL = (results[i].articleURL).replace(":", "%3A").replace("/", "%2F");
         }
@@ -93,7 +107,7 @@ $(document).ready(function() {
                 'dataType': "json",
                 success: function(data, textStats, XMLHttpRequest) {
 
-                	// for i in 
+                    // for i in 
                     return data.results;
                 },
                 error: function(data, textStatus, errorThrown) {
@@ -113,30 +127,40 @@ $(document).ready(function() {
                 'type': 'GET',
                 'dataType': "jsonp",
                 success: function(data, textStats, XMLHttpRequest) {
-                	// var user_comment = [];
-                	var results = data.results.comments;
-                	console.log(data.results.comments);
 
-                	for (var i = 0; i < results.length; i++) {
-                		var comment = results[i].commentBody;
-                		// user_comment.push(results[i].commentBody);
-                		if (comment != first_comment) {
-                			$('<div class= "panel box"><div class="box-comment">' + results[i].commentBody + '</div></div>').appendTo($("#"+user_id));
-                		}
-                	}
-                	
+                    var results = data.results.comments;
+                    // console.log(data.results);
+                    console.log(results);
+
+                    for (var i = 0; i < results.length; i++) {
+                        var utcSeconds = results[i].approveDate;
+                        var d = new Date(0);
+                        d.setUTCSeconds(utcSeconds);
+                        var date = d.getDate() + '/' + (d.getMonth() + 1) + '/' + d.getFullYear();
+                        var month = d.getMonth() + 1;
+                        var year = d.getFullYear();
+                        var location = results[i].location;
+                        var display_name = results[i].display_name;
+                        var user_id = results[i].userComments.substr(50).replace(".xml", "");
+                        var comment = results[i].commentBody;
+
+                        if (comment != first_comment) {
+                            $('<div class= "panel box"><div class="box-comment"><p style="color: grey; font-size: 13px;">' + location + ' @ ' 
+                            	+ date + '</p>' + comment + '</div></div>').appendTo($('#more-comments-' + user_id));
+                        }
+                    }
+
+                    if (results.length > 1) {
+                        $('<div class= "more-button-out"><a href="#'+user_id+'" onclick="toggle_more(\'more-comments-' + user_id +
+                            '\');"><img src="img/down_arrow_green.png" class="more-button"></a></div>').appendTo($('#' + user_id));
+						
+                    }
                 },
                 error: function(data, textStatus, errorThrown) {
                     console.log("error");
                 }
             });
     }
-
-    // function user_comments(user_comment) {
-    // 	for (var i=0, i<user_comment.length; i++) {
-    // 		$('<div class= "panel box"><div class="box-comment">' + user_comment[i] + '</div></div>').appendTo($("#"+user_id));
-    // 	}
-    // }
 
     function comment_page_content(results) {
         // alert(results);
@@ -157,6 +181,5 @@ $(document).ready(function() {
         article_search("asdfasdf");
 
     });
-
 
 });

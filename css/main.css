@@ -1,4 +1,23 @@
+/*@font-face {
+    font-family: 'icomoon';
+    src:url('../fonts/icomoon/icomoon.eot');
+    src:url('../fonts/icomoon/icomoon.eot?#iefix') format('embedded-opentype'),
+        url('../fonts/icomoon/icomoon.woff') format('woff'),
+        url('../fonts/icomoon/icomoon.ttf') format('truetype'),
+        url('../fonts/icomoon/icomoon.svg#icomoon') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}*/
+/*@font-face { font-family: 'Raleway_Thin'; 
+	src: url('../fonts/raleway/raleway_thin-webfont.eot') format('embedded-opentype'), 
+	url('../fonts/raleway/raleway_thin-webfont.woff') format('woff'), 
+	url('../fonts/raleway/raleway_thin-webfont.ttf') format('truetype'), 
+	url('../fonts/raleway/raleway_thin-webfont.svg') format('svg'); 
+	font-weight: normal; font-style: normal; }*/
 
+html, body {
+	font-family: 'Lato';
+}
 
 .navbar-header {
     /*margin-top:-6px;*/
@@ -23,6 +42,13 @@
 	width:100%;
 }
 
+.anchors {
+	top: -80px;
+	display: block; 
+	position: relative; 
+	visibility: hidden;
+}
+
 #search-list {
 	/*margin-right: 10px;*/
 }
@@ -37,18 +63,21 @@
 	width:100%;
 }*/
 
-#whole-wrapper {
+#page-content-wrapper {
 	margin-top: 60px;
 	width:100%;
+	/*height:calc(100% - 60px);*/
 }
 
 #sidebar-wrapper {
 	width:350px;
 	float:left;
+	margin-top: 60px;
+	height:calc(100% - 60px);
 }
 
 .comment-inside {
-	margin:10px;
+	margin-left:10px;
 }
 
 #page-content-wrapper {
@@ -65,7 +94,7 @@
 
 .inline {
 	margin-top: -30px;
-	margin-left: 30px;
+	margin-left: 30px;	
 }
 
 .box {
@@ -73,10 +102,21 @@
 	margin-right: 40px;
 	border-radius: 5px;
 	border-style:solid;
-	/*border-color: #18bc9c;*/
 	border-width: 2px;
 }
 
 .box-comment {
 	margin: 10px;
+}
+
+.more-button {
+	height:50px;
+	width:50px;
+	display: block;
+	margin: 0 auto;
+}
+
+.more-button:hover {
+	opacity: 0.4;
+    filter: alpha(opacity=30);
 }
