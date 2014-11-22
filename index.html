@@ -20,6 +20,12 @@
     <!-- Custom CSS -->
     <link href="css/simple-sidebar.css" rel="stylesheet">
     <link href="css/main.css" rel="stylesheet">
+
+    <link href="css/bootstrap-datetimepicker.css" rel="stylesheet">
+    <link href="css/bootstrap-datetimepicker.min.css" rel="stylesheet">
+
+    <!-- <link href="css/lightbox.css" rel="stylesheet"> -->
+    <link rel="stylesheet" type="text/css" href="css/minimalist/jquery.lightbox.css" />
     <!-- <link href="css/default.css" rel="stylesheet"> -->
     <!-- <link href="css/component.css" rel="stylesheet"> -->
     <!--<script src="js/search_bar/modernizr.custom.js"></script> -->
@@ -34,125 +40,175 @@
 </head>
 
 <body>
-    <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
-        <!-- <div class="container"> -->
-        <!-- Brand and toggle get grouped for better mobile display -->
-        <div class="navbar-header container" id="navbar-custom">
-            <a class="navbar-brand" href="#">
-                <div class="navbar-header-icon">
-                    <h3>POTATO</h3>
+    <div class="start-page">
+        <div class="searchheaderoverlay">
+            <div class="container" id="search_form">
+                <img class="resize" src="img/nytimes_logo.png">
+                <img class="resize2" src="img/comment_logo.png">
+                <h3 style="color:rgb(232, 233, 240);">Pick one of the following categories to filter comments by.</h3>
+                <div class="col-md-8 col-md-offset-2">
+                    <div class="input-group-btn input-group-select">
+                        <div class="btn-group btn-group-justified" role="group">
+                            <a href="#" class="btn btn-info" id="random_search" role="button">Random</a>
+                            <div class="btn-group" role="group">
+                                <a href="#" class="btn btn-default dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                                  Date <span class="caret"></span>
+                                </a>
+                                <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+                                    <li>
+                                        <div class="calendar col-md-20 no-padding">
+                                            <div class="input-group date form_date col-md-20 no-padding" data-date="" data-link-field="dtp_input2">
+                                                <input class="form-control" id="date" size="16" type="text" readonly placeholder="filter by: dd/mm/yyyy">
+                                                <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="btn-group" role="group">
+                                <a href="#" class="btn btn-success dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                                    Article Search <span class="caret"></span>
+                                </a>
+                                <ul class="dropdown-menu large" role="menu">
+                                    <li>
+                                        <form>
+                                            <div class="btn-group btn-group-justified" role="group">
+                                                <div class="col-md-9" style="padding-right:0;">
+                                                    <input id="article" type="text" class="form-control col-xs-6" placeholder="enter an article URL" \ style="border-bottom-right-radius: 0px; border-top-right-radius: 0px">
+                                                </div>
+                                                <div class="col-md-3" style="padding-left:0;">
+                                                    <button id="article_search" type="button" class="btn btn-default" style="border-bottom-left-radius: 0px; border-top-left-radius: 0px">Go!</button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="navbar-icon"><img src="img/logo_copy.png" height="30px" width="30px" margin-top="-20px">
-                </div>
-                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                    <ul class="nav navbar-nav navbar-right" id="search-list">
-                        <li>
-                            <a class="search" id="random_search" href="#">RANDOM</a>
-                        </li>
-                        <li>
-                            <a class="search" id="date_search" href="#">DATE</a>
-                        </li>
-                        <li>
-                            <a class="search" id="article_search" href="#">ARTICLE</a>
-                        </li>
-                        <li>
-                        </li>
-                    </ul>
-                                 <!-- <div id="sb-search" class="sb-search">
-                                    <form>
-                                        <input class="sb-search-input" placeholder="Enter your search term..." type="text" value="" name="search" id="search">
-                                        <input class="sb-search-submit" type="submit" value="">
-                                        <span class="sb-icon-search"></span>
-                                    </form>
-                                </div> -->
-                </div>
-            </a>
+                <div class="error-msg" style="color:white;">Please enter in a<br> NYT article URL.</div>
+            </div>
         </div>
-        <!-- /.navbar-collapse -->
-        <!-- </div> -->
-        <!-- /.container -->
-    </nav>
+    </div>
 
-    <!-- <div id="whole-wrapper"> -->
-    <div id = "page-content-wrapper>">
+    <div class="page-results">
+        <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+
+            <div class="navbar-header container" id="navbar-custom">
+                <a class="navbar-brand commentator">
+                    <div class="navbar-header-icon">
+                        <h3>COMMENTATOR</h3>
+                    </div>
+                    <div class="navbar-icon"><img src="img/logo_copy.png" height="30px" width="30px" margin-top="-20px">
+                    </div>
+                </a>
+                    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                        <ul class="nav navbar-nav navbar-right" id="search-list">
+                            <li class="mode">
+                                <!-- <a class="search" id="random_search" href="#">RANDOM MODE ON</a> -->
+                            </li>
+                        </ul>
+                    </div>
+                
+            </div>
+
+        </nav>
+
 
         <!-- Sidebar -->
         <div id="sidebar-wrapper">
-            
+
             <ul class="sidebar-nav">
             </ul>
-            
+
         </div>
         <!-- /#sidebar-wrapper -->
 
         <!-- Page Content -->
         <div id="page-content-wrapper">
             <div class="col-lg-12">
-                <div class="extra-information">
-                    <h1>Wheee</h1>
-                    <p>Click on any of the comments in the sidebar to see related information!</p>
-                    <a href="#menu-toggle" class="btn btn-default" id="menu-toggle">Toggle Menu</a>
+                <div id="page-wrap">
+                    <div id="sidebar">
+                        <button class="btn btn-danger ranks search_again">Search
+                            <br>Again</button>
+                        <br>
+                        <br>
+                        <a href="img/help-page.jpg?lightbox[iframe]=true&lightbox[width]=75p&lightbox[height]=75p" class="lightbox">
+                            <button class="btn btn-warning ranks">Help<br>Page</button>
+                        </a>
+                        <br>
+                        <br>
+                        <button type="button" class="btn btn-alert ranks" data-toggle="modal" data-target="#myModal" style="background-color:rgb(231, 203, 1)">Ranks</button>
+                    </div>
                 </div>
-                
                 <div class="expanded-comments">
+                </div>
+                <div id="no-result">
+            </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- modal wrapper -->
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">
+                        <span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+                    </button>
+                    <div class="legend">
+                        <div class="box-leg" style="background-color:#e74c3c; font-size:12px;">informative</div>
+                        <div class="box-leg" style="background-color:#f39c12; font-size:12px;">funny</div>
+                        <div class="box-leg" style="background-color:#18bc9c; font-size:12px;">thoughtful</div>
+                        <h3 class="modal-title" id="myModalLabel" style="text-align:left;">Running Summary </h3>
+                    </div>
+                </div>
+                <div class="modal-body">
+                    <h4 class="no-ratings">No ratings yet!</h4>
                 </div>
             </div>
         </div>
-        <!-- /#page-content-wrapper -->
-
     </div>
-    <!-- /#wrapper -->
+
 
     <!-- jQuery -->
     <script src="js/jquery-1.11.0.js"></script>
-
     <!-- Bootstrap Core JavaScript -->
     <script src="js/bootstrap.min.js"></script>
+    <!-- <script src="js/lightbox.min.js"></script>-->
+    <script src="js/jquery.lightbox.min.js"></script>
 
-    <!-- Menu Toggle Script -->
+    <script src="js/bootstrap-datetimepicker.js"></script>
+    <!--<script src="js/bootstrap-datetimepicker.min.js"></script>-->
     <script src="js/app.js"></script>
-    <!-- <script src="js/search_bar/classie.js"></script> 
-    <script src="js/search_bar/uisearch.js"></script>-->
-     <script>
+    <script>
         function toggle_more(id) {
-            // var er="less-button-"+id.substr(14);
-            // var e = document.getElementById(er);
+            var num = id.substr(14);
+            var id_num = id.substr(14);
             var el = document.getElementById(id);
-            // console.log(id);
-            // console.log(e);
-            // console.log(er);
+            img_num = '#img_' + id_num;
+            id_num = '#a_' + id_num;
+
             if (el.style.display != 'none') {
                 el.style.display = 'none';
+                $(img_num).attr('src', 'img/down_arrow_green.png');
+                $(id_num).text('Click for more comments.');
             } else {
                 el.style.display = '';
-                // e.style.display= 'none';
-
+                $(img_num).attr('src', 'img/up_arrow_green.png');
+                $(id_num).text('Click for less comments.');
             }
         }
 
         function scrollToAnchor(href) {
             var aTag = $("a[name='" + href + "']");
             $('html,body').animate({
-                scrollTop: aTag.offset().top+20
+                scrollTop: aTag.offset().top + 20
             }, 'slow');
         }
-        // function toggle_less(id) {
-        //     console.log(id);
-        //     var el = document.getElementById(id);
-        //     console.log(el);
-        //     if (el.style.display != 'none') {
-        //         el.style.display = 'none';
-        //     } else {
-        //         el.style.display = '';
-        //     }
-        // }
     </script>
-
-     <!--<script>
-        new UISearch( document.getElementById( 'sb-search' ) );
-    </script>-->
-
-
 </body>
 
 </html>
