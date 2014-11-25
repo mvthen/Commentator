@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Commentator</title>
+    <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="img/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Lato">
+
+    <!-- Bootstrap Core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link href="css/simple-sidebar.css" rel="stylesheet">
+    <link href="css/main.css" rel="stylesheet">
+
+    <link href="css/bootstrap-datetimepicker.css" rel="stylesheet">
+    <link href="css/bootstrap-datetimepicker.min.css" rel="stylesheet">
+
+    <!-- <link href="css/lightbox.css" rel="stylesheet"> -->
+    <link rel="stylesheet" type="text/css" href="css/minimalist/jquery.lightbox.css" />
+    <!-- <link href="css/default.css" rel="stylesheet"> -->
+    <!-- <link href="css/component.css" rel="stylesheet"> -->
+    <!--<script src="js/search_bar/modernizr.custom.js"></script> -->
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+</head>
+
+<body>
+    <div class="start-page">
+        <div class="searchheaderoverlay">
+            <div class="container" id="search_form">
+                <img class="resize" src="img/nytimes_logo.png">
+                <img class="resize2" src="img/comment_logo.png">
+                <h3 style="color:rgb(232, 233, 240);">Pick one of the following categories to filter comments by.</h3>
+                <div class="col-md-8 col-md-offset-2">
+                    <div class="input-group-btn input-group-select">
+                        <div class="btn-group btn-group-justified" role="group">
+                            <a href="#" class="btn btn-info" id="random_search" role="button">Random</a>
+                            <div class="btn-group" role="group">
+                                <a href="#" class="btn btn-default dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                                  Date <span class="caret"></span>
+                                </a>
+                                <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+                                    <li>
+                                        <div class="calendar col-md-20 no-padding">
+                                            <div class="input-group date form_date col-md-20 no-padding" data-date="" data-link-field="dtp_input2">
+                                                <input class="form-control" id="date" size="16" type="text" readonly placeholder="filter by: dd/mm/yyyy">
+                                                <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="btn-group" role="group">
+                                <a href="#" class="btn btn-success dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                                    Article Search <span class="caret"></span>
+                                </a>
+                                <ul class="dropdown-menu large" role="menu">
+                                    <li>
+                                        <form>
+                                            <div class="btn-group btn-group-justified" role="group">
+                                                <div class="col-md-9" style="padding-right:0;">
+                                                    <input id="article" type="text" class="form-control col-xs-6" placeholder="enter an article URL" \ style="border-bottom-right-radius: 0px; border-top-right-radius: 0px">
+                                                </div>
+                                                <div class="col-md-3" style="padding-left:0;">
+                                                    <button id="article_search" type="button" class="btn btn-default" style="border-bottom-left-radius: 0px; border-top-left-radius: 0px">Go!</button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="error-msg" style="color:white;">Please enter in a<br> NYT article URL.</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="page-results">
+        <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+
+            <div class="navbar-header container" id="navbar-custom">
+                <a class="navbar-brand commentator">
+                    <div class="navbar-header-icon">
+                        <h3>COMMENTATOR</h3>
+                    </div>
+                    <div class="navbar-icon"><img src="img/logo_copy.png" height="30px" width="30px" margin-top="-20px">
+                    </div>
+                </a>
+                    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                        <ul class="nav navbar-nav navbar-right" id="search-list">
+                            <li class="mode">
+                                <!-- <a class="search" id="random_search" href="#">RANDOM MODE ON</a> -->
+                            </li>
+                        </ul>
+                    </div>
+                
+            </div>
+
+        </nav>
+
+
+        <!-- Sidebar -->
+        <div id="sidebar-wrapper">
+
+            <ul class="sidebar-nav">
+            </ul>
+
+        </div>
+        <!-- /#sidebar-wrapper -->
+
+        <!-- Page Content -->
+        <div id="page-content-wrapper">
+            <div class="col-lg-12">
+                <div id="page-wrap">
+                    <div id="sidebar">
+                        <button class="btn btn-danger ranks search_again">Search
+                            <br>Again</button>
+                        <br>
+                        <br>
+                        <a href="img/help-page.jpg?lightbox[iframe]=true&lightbox[width]=75p&lightbox[height]=75p" class="lightbox">
+                            <button class="btn btn-warning ranks">Help<br>Page</button>
+                        </a>
+                        <br>
+                        <br>
+                        <button type="button" class="btn btn-alert ranks" data-toggle="modal" data-target="#myModal" style="background-color:rgb(231, 203, 1)">Ranks</button>
+                    </div>
+                </div>
+                <div class="expanded-comments">
+                </div>
+                <div id="no-result">
+            </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- modal wrapper -->
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">
+                        <span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+                    </button>
+                    <div class="legend">
+                        <div class="box-leg" style="background-color:#e74c3c; font-size:12px;">informative</div>
+                        <div class="box-leg" style="background-color:#f39c12; font-size:12px;">funny</div>
+                        <div class="box-leg" style="background-color:#18bc9c; font-size:12px;">thoughtful</div>
+                        <h3 class="modal-title" id="myModalLabel" style="text-align:left;">Running Summary </h3>
+                    </div>
+                </div>
+                <div class="modal-body">
+                    <h4 class="no-ratings">No ratings yet!</h4>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- jQuery -->
+    <script src="js/jquery-1.11.0.js"></script>
+    <!-- Bootstrap Core JavaScript -->
+    <script src="js/bootstrap.min.js"></script>
+    <!-- <script src="js/lightbox.min.js"></script>-->
+    <script src="js/jquery.lightbox.min.js"></script>
+
+    <script src="js/bootstrap-datetimepicker.js"></script>
+    <!--<script src="js/bootstrap-datetimepicker.min.js"></script>-->
+    <script src="js/app.js"></script>
+    <script>
+        function toggle_more(id) {
+            var num = id.substr(14);
+            var id_num = id.substr(14);
+            var el = document.getElementById(id);
+            img_num = '#img_' + id_num;
+            id_num = '#a_' + id_num;
+
+            if (el.style.display != 'none') {
+                el.style.display = 'none';
+                $(img_num).attr('src', 'img/down_arrow_green.png');
+                $(id_num).text('Click for more comments.');
+            } else {
+                el.style.display = '';
+                $(img_num).attr('src', 'img/up_arrow_green.png');
+                $(id_num).text('Click for less comments.');
+            }
+        }
+
+        function scrollToAnchor(href) {
+            var aTag = $("a[name='" + href + "']");
+            $('html,body').animate({
+                scrollTop: aTag.offset().top + 20
+            }, 'slow');
+        }
+    </script>
+</body>
+
+</html>
